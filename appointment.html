@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Book Appointment — MediCare Clinic</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --navy: #0a2342;
+  --blue: #1a56db;
+  --light-blue: #e8f0fe;
+  --gold: #c9a84c;
+  --white: #ffffff;
+  --gray: #f8f9fc;
+  --text: #1a1a2e;
+  --muted: #6b7280;
+  --border: #e5e7eb;
+  --green: #10b981;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  color: var(--text);
+  background: linear-gradient(135deg, #0a2342 0%, #1a3a6b 60%, #1a56db 100%);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1rem;
+}
+
+.back-link {
+  position: absolute;
+  top: 1.5rem;
+  left: 1.5rem;
+  color: rgba(255,255,255,0.85);
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.back-link:hover { color: white; }
+
+.wrap {
+  background: white;
+  border-radius: 20px;
+  padding: 2.5rem;
+  width: 100%;
+  max-width: 480px;
+  box-shadow: 0 25px 60px rgba(0,0,0,0.3);
+}
+
+.logo-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 1.5rem;
+}
+.logo-icon {
+  width: 36px;
+  height: 36px;
+  background: var(--blue);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 18px;
+}
+.logo-text {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--navy);
+}
+.logo-text span { color: var(--blue); }
+
+.title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 0.4rem;
+}
+.subtitle {
+  color: var(--muted);
+  font-size: 0.92rem;
+  margin-bottom: 1.75rem;
+}
+
+.form-group { margin-bottom: 1.1rem; }
+.form-group label {
+  display: block;
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+.form-group input,
+.form-group select {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-family: 'Inter', sans-serif;
+  outline: none;
+  transition: border-color 0.2s;
+  background: var(--gray);
+}
+.form-group input:focus,
+.form-group select:focus { border-color: var(--blue); background: white; }
+
+.submit-btn {
+  width: 100%;
+  padding: 14px;
+  background: var(--blue);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  transition: opacity 0.2s;
+  margin-top: 0.5rem;
+}
+.submit-btn:hover { opacity: 0.9; }
+.submit-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+.error-text {
+  color: #dc2626;
+  font-size: 0.82rem;
+  margin-top: -0.5rem;
+  margin-bottom: 1rem;
+  display: none;
+}
+.error-text.show { display: block; }
+
+/* CONFIRMATION VIEW */
+.confirm-view { display: none; text-align: center; }
+.confirm-view.show { display: block; }
+.confirm-icon {
+  width: 72px;
+  height: 72px;
+  background: #d1fae5;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.2rem;
+  margin: 0 auto 1.25rem;
+}
+.confirm-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 0.5rem;
+}
+.confirm-desc {
+  color: var(--muted);
+  font-size: 0.92rem;
+  margin-bottom: 1.5rem;
+  line-height: 1.6;
+}
+.confirm-details {
+  background: var(--gray);
+  border-radius: 10px;
+  padding: 1rem 1.2rem;
+  text-align: left;
+  margin-bottom: 1.5rem;
+}
+.confirm-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 0;
+  font-size: 0.88rem;
+  border-bottom: 1px solid var(--border);
+}
+.confirm-row:last-child { border-bottom: none; }
+.confirm-row span:first-child { color: var(--muted); }
+.confirm-row span:last-child { font-weight: 600; color: var(--navy); }
+
+.whatsapp-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #25d366;
+  color: white;
+  padding: 12px 20px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+}
+
+.form-view { display: block; }
+.form-view.hide { display: none; }
+</style>
+</head>
+<body>
+
+<a href="index.html" class="back-link">← Back to Home</a>
+
+<div class="wrap">
+
+  <!-- FORM VIEW -->
+  <div class="form-view" id="form-view">
+    <div class="logo-row">
+      <div class="logo-icon">🏥</div>
+      <div class="logo-text">Medi<span>Care</span></div>
+    </div>
+    <div class="title">Book Your Appointment</div>
+    <div class="subtitle">Fill in your details and our team will confirm your slot shortly.</div>
+
+    <div class="form-group">
+      <label>Full Name *</label>
+      <input id="appt-name" type="text" placeholder="Enter your full name" />
+    </div>
+
+    <div class="form-group">
+      <label>Phone Number *</label>
+      <input id="appt-phone" type="tel" placeholder="+91 98765 43210" />
+    </div>
+
+    <div class="form-group">
+      <label>Department</label>
+      <select id="appt-dept">
+        <option>General Medicine</option>
+        <option>Cardiology</option>
+        <option>Orthopedics</option>
+        <option>Pediatrics</option>
+        <option>Dermatology</option>
+        <option>Neurology</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>Preferred Date *</label>
+      <input id="appt-date" type="date" />
+    </div>
+
+    <div class="error-text" id="error-msg">Please fill all required fields.</div>
+
+    <button class="submit-btn" id="appt-btn" type="button">Confirm Appointment →</button>
+  </div>
+
+  <!-- CONFIRMATION VIEW -->
+  <div class="confirm-view" id="confirm-view">
+    <div class="confirm-icon">✅</div>
+    <div class="confirm-title">Appointment Booked!</div>
+    <div class="confirm-desc">Thank you! We've received your request and will call you shortly to confirm your slot.</div>
+    <div class="confirm-details">
+      <div class="confirm-row"><span>Name</span><span id="c-name"></span></div>
+      <div class="confirm-row"><span>Phone</span><span id="c-phone"></span></div>
+      <div class="confirm-row"><span>Department</span><span id="c-dept"></span></div>
+      <div class="confirm-row"><span>Date</span><span id="c-date"></span></div>
+    </div>
+    <a href="https://wa.me/919876543210" class="whatsapp-link" target="_blank">💬 Message us on WhatsApp</a>
+  </div>
+
+</div>
+
+<script>
+const SHEET_URL = 'https://script.google.com/macros/s/AKfycbxIfuZ7z5tg-GlRB6aRrMUaYbbmeb5FpwvjrooCGQI5BkIg1-Ne1Ud67w3HTbdUR0lJPQ/exec';
+
+document.getElementById('appt-btn').addEventListener('click', function () {
+  const name = document.getElementById('appt-name').value.trim();
+  const phone = document.getElementById('appt-phone').value.trim();
+  const dept = document.getElementById('appt-dept').value;
+  const date = document.getElementById('appt-date').value;
+  const errorMsg = document.getElementById('error-msg');
+
+  if (!name || !phone || !date) {
+    errorMsg.classList.add('show');
+    return;
+  }
+  errorMsg.classList.remove('show');
+
+  const btn = document.getElementById('appt-btn');
+  btn.textContent = 'Booking...';
+  btn.disabled = true;
+
+  fetch(SHEET_URL, {
+    method: 'POST',
+    mode: 'no-cors',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ name: name, phone: phone, department: dept, date: date })
+  })
+  .then(function () {
+    showConfirmation(name, phone, dept, date);
+  })
+  .catch(function () {
+    showConfirmation(name, phone, dept, date);
+  });
+});
+
+function showConfirmation(name, phone, dept, date) {
+  document.getElementById('c-name').textContent = name;
+  document.getElementById('c-phone').textContent = phone;
+  document.getElementById('c-dept').textContent = dept;
+  document.getElementById('c-date').textContent = date;
+
+  document.getElementById('form-view').classList.add('hide');
+  document.getElementById('confirm-view').classList.add('show');
+}
+</script>
+
+</body>
+</html>
